@@ -1,0 +1,31 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="UTF-8">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'debates/front.css' %}">
+    </head>
+    <body>
+        <h1>Welcome to De-Bit!<h1/>
+
+        <h1 class="createDebateButton"> <a href="bad">Create a Debate </a></h1>
+
+        <h1 class="joinDebateButton"><a href="bad">Join a Debate</a></h1>
+        Debates in format [Topic] [position of creator]
+
+        {% for c in categories %}
+
+        <h2 class="categoryTitle">{{c.name}}</h2>
+        <ul>
+            {% for d in c.debate_set.all %}
+            <li class="debateblurb"><a href="bad">{{d.topic}}</a><span class="position">({{d.orig_position}})</span></li>
+            {% endfor %}
+        </ul>
+        {%endfor%}
+
+    </body>
+    </html>
+
+

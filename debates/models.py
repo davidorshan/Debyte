@@ -11,7 +11,6 @@ class User(models.Model):
 
 class Debate(models.Model):
     topic = models.CharField(max_length=500)
-    title = models.CharField(max_length=500)
     orig_position = models.CharField(max_length=500)
     starter_user = models.ForeignKey(User, related_name="debate_starter_user", default=None, blank=True, null=True)
     joiner_user = models.ForeignKey(User, related_name="debate_joiner_user", default=None, blank=True, null=True)
