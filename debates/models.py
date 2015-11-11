@@ -1,11 +1,11 @@
 from django.db import models
 
-from django.db import models
-
 # Create your models here.
 class Category(models.Model):
     name = models.CharField(max_length=200)
-
+    def __str__(self):
+        return self.name
+		
 class User(models.Model):
     name = models.CharField(max_length=100)
 
@@ -19,6 +19,8 @@ class Debate(models.Model):
     anon_username_joiner = models.CharField(max_length=100, default=None, blank=True, null=True)
     category = models.ForeignKey(Category)
     allow_anon_users = models.BooleanField()
+    def __str__(self):
+        return self.topic
 
 class ChatMessage(models.Model):
     message = models.TextField()
