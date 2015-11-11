@@ -1,0 +1,13 @@
+<h1>{{chatroom.name}}</h1>
+<ul>
+{% for messages in messages.all%}
+	<li>[{{messages.created}}]{{messages.user}}:{{messages.message}}</li>
+{%endfor%}
+</ul>
+<form  method='post' action='/front/{{chatroom.pk}}/add_message'>
+{%csrf_token%}
+	<label>{{username}}</label>
+	<label>Message </label>
+	<input type="text" name="message"/>
+	<input type="submit" />
+</form>

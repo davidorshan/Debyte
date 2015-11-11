@@ -23,6 +23,8 @@ class Debate(models.Model):
         return self.topic
 
 class ChatMessage(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    user = models.CharField(max_length=100,default=None, blank=True, null=True)
     message = models.TextField()
     debate = models.ForeignKey(Debate)
     numberMessage = models.IntegerField(default=0)
