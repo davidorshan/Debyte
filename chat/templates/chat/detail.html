@@ -1,0 +1,15 @@
+<h1>{{chatroom.name}}</h1>
+<ul>
+{% for messages in messages.all%}
+	<li>[{{messages.timestamp}}]{{messages.user.name}}:{{messages.message}}</li>
+{%endfor%}
+</ul>
+<form  method='post'>
+{%csrf_token%}
+	<label>Username</label>
+	<input type="text" name="user_name"/>
+	<br>
+	<label>Message </label>
+	<input type="text" name="user_message"/>
+	<input type="submit" />
+</form>

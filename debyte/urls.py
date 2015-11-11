@@ -19,4 +19,5 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^front/', include('debates.urls')),
+	url(r'^chat/', include('chat.urls')),
 ]

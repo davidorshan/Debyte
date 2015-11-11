@@ -30,12 +30,11 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('topic', models.CharField(max_length=500)),
-                ('title', models.CharField(max_length=500)),
                 ('orig_position', models.CharField(max_length=500)),
                 ('status', models.IntegerField(default=0)),
-                ('anon_username_starter', models.CharField(max_length=100)),
-                ('anon_username_joiner', models.CharField(max_length=100)),
-                ('allow_anon_users', models.BooleanField(max_length=100)),
+                ('anon_username_starter', models.CharField(default=None, max_length=100, null=True, blank=True)),
+                ('anon_username_joiner', models.CharField(default=None, max_length=100, null=True, blank=True)),
+                ('allow_anon_users', models.BooleanField()),
                 ('category', models.ForeignKey(to='debates.Category')),
             ],
         ),
@@ -49,12 +48,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='debate',
             name='joiner_user',
-            field=models.ForeignKey(related_name='debate_joiner_user', to='debates.User'),
+            field=models.ForeignKey(related_name='debate_joiner_user', default=None, blank=True, to='debates.User', null=True),
         ),
         migrations.AddField(
             model_name='debate',
             name='starter_user',
-            field=models.ForeignKey(related_name='debate_starter_user', to='debates.User'),
+            field=models.ForeignKey(related_name='debate_starter_user', default=None, blank=True, to='debates.User', null=True),
         ),
         migrations.AddField(
             model_name='chatmessage',

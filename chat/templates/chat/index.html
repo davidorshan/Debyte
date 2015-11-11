@@ -1,0 +1,9 @@
+{% if latest_chatroom_list %}
+	<ul>
+	{% for Chatroom in latest_chatroom_list %}
+		<li><a href="/chat/{{Chatroom.id}}/">{{Chatroom.name}}</a></li>
+	{%endfor%}
+	</ul>
+{%else%}
+	<p>No chatrooms are avaliable.</p>
+{%endif%}
