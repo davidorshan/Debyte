@@ -1,17 +1,30 @@
 from django.shortcuts import render
 #from django.http import HttpResponse
 from .models import Debate, Category
+from django.http import Http404
 
 # Create your views here.
 
-def front_page(request):
+def front_page(request, redirect_message=None):
 
     categories = Category.objects.all()
     #return HttpResponse(','.join([a.topic for a in categories[1].debate_set.all()]))
-    context = {"categories":categories}
+    context = {"categories":categories, "redirect_message":redirect_message}
     print context
     return render(request, "front.html", context)
 
+def join_debate(request, debateId=-1):
+    try:
+        debate = Debate.objects.get(pk=debateId)
+    except Question.DoesNotExist:
+        raise Http404("Debate does not exist")
+    if debate.status == 1:
+        return front_page(request, redirect_message="Someone already joined that debate! Sorry")
+
+
+    #TODO add debate
+    #todo add page that says sorry
+    return front_page(request, redirect_message="JoinedDebate!")
 
 def create_debate(request):
 
