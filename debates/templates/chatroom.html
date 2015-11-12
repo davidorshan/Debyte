@@ -1,13 +1,18 @@
-<h1>{{chatroom.name}}</h1>
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'debates/chatroom.css' %}" />
+
+<h1>{{chatroom.topic}}</h1>
 <ul>
 {% for messages in messages.all%}
-	<li>[{{messages.created}}]{{messages.user}}:{{messages.message}}</li>
+	<li><span class="message_date">[{{messages.created}}]</span> <span class="message_user">{{messages.user}}</span> : <span class="message">{{messages.message}}</span></li>
 {%endfor%}
 </ul>
+<br>
+<section>
 <form  method='post' action='/front/{{chatroom.pk}}/add_message'>
 {%csrf_token%}
-	<label>{{username}}</label>
-	<label>Message </label>
-	<input type="text" name="message"/>
-	<input type="submit" />
+	<label>{{username}}: </label>
+	<input type="text" name="message" class="user_message"/>
+	<input type="submit" value="Send"/>
 </form>
+</section>

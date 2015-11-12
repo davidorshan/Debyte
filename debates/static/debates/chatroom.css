@@ -1,0 +1,36 @@
+h1{
+    
+}
+
+ul{
+    list-style-type: none;
+    padding: 0
+}
+
+form{
+    display: inline;
+}
+
+section{
+    bottom: 0px;
+    position: fixed;
+    border: solid;
+    border-width: 2px;
+    display: block;
+    width: 99.5%;
+    padding: 3px;
+    background: linear-gradient(0deg, lightblue, white);
+    margin-left:-.6%;
+}
+
+.message_date{
+    color: blue;
+}
+
+.message_user{
+    font-style: italic;
+}
+
+.user_message{
+    width: 85%;
+}
