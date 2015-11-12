@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <title>title</title>
     <link rel="stylesheet" type="text/css" href="{% static 'debates/front.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'debates/main.css' %}">
     </head>
     <body>
         {% if redirect_message %}
@@ -23,7 +24,9 @@
         <h2 class="categoryTitle">{{c.name}}</h2>
         <ul>
             {% for d in c.debate_set.all %}
+                {% if d.status == 0 %}
             <li class="debateblurb"><a href="/front/{{d.pk}}/join/">{{d.topic}}</a><span class="position">({{d.orig_position}})</span></li>
+                {% endif %}
             {% endfor %}
         </ul>
         {%endfor%}

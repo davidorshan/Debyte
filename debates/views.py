@@ -21,8 +21,13 @@ def join_debate(request, debateId=-1):
     if debate.status == 1:
         #concurrency issues
         return front_page(request, redirect_message="Someone already joined that debate! Sorry")
-    request.session[str(debateId)] = "Bob"
-    debate.status = 2
+    if not request.POST:
+        #if need to make name
+        request.session[str(debateId)] = "TMP"
+        context = {"debateId":debateId}
+        return render(request, "join_debate.html", context)
+    request.session[str(debateId)] = request.POST["name"]
+    debate.status = 1
     debate.save()
     #TODO add debate
     #todo add page that says sorry
