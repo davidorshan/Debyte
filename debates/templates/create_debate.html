@@ -1,23 +1,32 @@
-<h2> Create a Debate </h2>
+{% load staticfiles %}
 
-<form action="created_dummy" method="post">
-{% csrf_token %}
+<!DOCTYPE html>
+<html>
 
-<p> Topic: </p>
-<input type="text" name="topic" id="topic"><br />
+	<link rel="stylesheet" type="text/css" href="{% static 'debates/create_debate.css' %}">
 
-<p> Position: </p>
-<input type="text" name="position" id="position"><br />
-<p> Your name: </p>
-<input type="text" name="starter_name" id="starter_name"><br />
-<br />
+	<h2> Create a Debate </h2>
 
-<h3> Category </h3>
-{% for category in categories %}
-    <input type="radio" name="category" id="category{{ forloop.counter }}" value="{{ category.id }}" />
-    <label for="category{{ forloop.counter }}">{{ category.name }}</label><br />
-{% endfor %}
+	<form action="created_dummy" method="post">
+	{% csrf_token %}
 
-<br />
-<input type="submit" value="Create Debate" />
-</form>
+	<p> Topic: </p>
+	<input type="text" name="topic" id="topic"><br />
+
+	<p> Position: </p>
+	<input type="text" name="position" id="position"><br />
+	<p> Your name: </p>
+	<input type="text" name="starter_name" id="starter_name"><br />
+	<br />
+
+	<h3> Category </h3>
+	{% for category in categories %}
+		<input type="radio" name="category" id="category{{ forloop.counter }}" value="{{ category.id }}" />
+		<label for="category{{ forloop.counter }}">{{ category.name }}</label><br />
+	{% endfor %}
+
+	<br />
+	<input type="submit" value="Create Debate" />
+	</form>
+
+</html>
