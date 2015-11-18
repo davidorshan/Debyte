@@ -1,0 +1,5 @@
+<ul id="message_list">
+{% for messages in messages.all%}
+	<li><span class="message_date">[{{messages.created}}]</span> <span class="message_user">{{messages.user}}</span> : <span class="message">{{messages.message}}</span></li>
+{%endfor%}
+</ul>

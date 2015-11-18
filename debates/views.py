@@ -71,3 +71,12 @@ def created_dummy(request):
     #TODO redirect to debate page
     #return render(request, 'created_dummy.html')
     return detail(request, new_debate.pk)
+
+def get_username(request):
+    return render(request, "username.txt")
+    
+def chat_refresh(request, chatroom_id):
+    chatroom = get_object_or_404(Debate, pk=chatroom_id)
+    messages = ChatMessage.objects.filter(debate=chatroom.id)
+    #TODO sort by timestamp
+    return render(request, "chat_refresh.html", {'chatroom':chatroom, 'messages':messages})	

@@ -1,17 +1,53 @@
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'debates/chatroom.css' %}" />
 
-<h1>{{chatroom.topic}}</h1>
-<ul>
+<script>
+function updateMessages(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if (xhttp.readyState == 4 && xhttp.status == 200){
+        var myNode = document.getElementById("message_list");
+        while (myNode.firstChild) {
+            myNode.removeChild(myNode.lastChild);
+        }
+        document.getElementById("message_list").innerHTML = xhttp.responseText;
+        }
+        
+    };
+    xhttp.open("GET", "/front/{{chatroom.pk}}/chat_refresh", true);
+    xhttp.send(document.getElementById("user_form"));
+}
+
+function sendMessage(){
+    //Ignore this. It was intended to send messages to the server async.
+    var x = new XMLHttpRequest();
+    
+    
+    if (x.readyState == 4 && x.status == 200){
+        updateMessages();
+    }
+    //I think the issue is here. Something in these two lines isn't sending the
+    //right info to /add_message.
+    x.open("POST", "/front/{{chatroom.pk}}/add_message", true);
+    x.send({{chatroom.pk}});
+}
+
+var myInterval = setInterval(updateMessages, 2000);
+
+</script>
+
+<h1 id="topic">{{chatroom.topic}}</h1>
+<ul id="message_list">
 {% for messages in messages.all%}
 	<li><span class="message_date">[{{messages.created}}]</span> <span class="message_user">{{messages.user}}</span> : <span class="message">{{messages.message}}</span></li>
 {%endfor%}
 </ul>
 <br>
 <section>
-<form  method='post' action='/front/{{chatroom.pk}}/add_message'>
+
+<form id='user_form' method='post' action='/front/{{chatroom.pk}}/add_message' onsubmit="">
 {%csrf_token%}
-	<label>{{username}}: </label>
+	<label id="username">{{username}}: </label>
 	<input type="text" name="message" class="user_message"/>
 	<input type="submit" value="Send"/>
 </form>
