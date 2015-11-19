@@ -7,7 +7,7 @@
 
 	<h2> Create a Debate </h2>
 
-	<form action="created_dummy" method="post">
+	<form action="/front/{{debateId}}/waiting" method="post">
 	{% csrf_token %}
 
 	<p> Topic: </p>
