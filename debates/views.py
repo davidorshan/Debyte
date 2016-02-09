@@ -2,7 +2,6 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Debate, Category, ChatMessage
 from django.http import Http404
-import random
 
 # Create your views here.
 
