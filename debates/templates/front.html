@@ -24,9 +24,13 @@
         <h2 class="categoryTitle">{{c.name}}</h2>
         <ul>
             {% for d in c.debate_set.all %}
-                {% if d.status == 0 %}
-            <li class="debateblurb"><a href="/front/{{d.pk}}/join/">{{d.topic}}</a><span class="position">({{d.orig_position}})</span></li>
-                {% endif %}
+                {% for i in to_display %}
+                    {% if d.status == 0 %}
+                        {% if d.topic == i.topic %}
+                            <li class="debateblurb"><a href="/front/{{d.pk}}/join/">{{d.topic}}</a><span class="position">({{d.orig_position}})</span></li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
             {% endfor %}
         </ul>
         {%endfor%}
