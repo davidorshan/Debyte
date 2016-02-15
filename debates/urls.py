@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.front_page, name='front_page'),
-    url(r'^create_debate$', views.create_debate_form, name='create_debate'),
+    url(r'^create_debate$', views.create_debate, name='create_debate'),
     url(r'^(?P<debateId>[0-9]+)/waiting$', views.waiting, name='waiting'),
 	url(r'^(?P<debateId>[0-9]+)/waiting_done$', views.waiting_done, name='waiting_done'),
     url(r'^(?P<debateId>[0-9]+)/add_message$', views.add_message, name='add_message'),

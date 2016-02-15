@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from .models import Debate, Category, ChatMessage
 from django.http import Http404
 
@@ -41,28 +41,10 @@ def detail(request, chatroom_id):
     print (request.session.keys())
     return render(request, "chatroom.html", {'chatroom':chatroom, 'messages':messages, 'username':request.session[str(chatroom_id)]})	
 	
-#form TODO change name
-def create_debate_form(request):
-    if request.method == "POST":
-        #TODO error checking
-        new_debate = Debate()
-        new_debate.topic = request.POST['topic']
-        new_debate.orig_position = request.POST['position']
-        new_debate.anon_username_starter = request.POST["starter_name"]
-        #deal with joining multiple debates later
-        #TODO add user
-        #new_debate.anon_username_starter = request.POST['starter_name']
-        new_debate.category = Category.objects.get(pk=request.POST['category'])
-        new_debate.allow_anon_users = 1            #defaulted to true for now
-        new_debate.save()
-        debateId = new_debate.pk
-        request.session[str(new_debate.pk)] = request.POST["starter_name"]
-        print new_debate.pk
-        # do processing
-        # save model, etc.
-        return HttpResponseRedirect("/front/"+str(debateId)+"/waiting")
+def create_debate(request):
+    debateId = Debate.objects.count() + 1
     categories = Category.objects.all()
-    context = {"categories":categories}
+    context = {"categories":categories, "debateId":debateId}
     return render(request, 'create_debate.html', context)
 
 def add_message(request, debateId):
@@ -73,12 +55,22 @@ def add_message(request, debateId):
     new_message.debate = Debate.objects.get(pk=debateId)
     new_message.save()
     return detail(request, debateId)
-
-
-
-
+	
 def waiting(request, debateId):
+    new_debate = Debate()
+    new_debate.topic = request.POST['topic']
+    new_debate.orig_position = request.POST['position']
+    new_debate.anon_username_starter = request.POST["starter_name"]
+    #deal with joining multiple debates later
+    #TODO add user
+    #new_debate.anon_username_starter = request.POST['starter_name']
+    new_debate.category = Category.objects.get(pk=request.POST['category'])
+    new_debate.allow_anon_users = 1            #defaulted to true for now
+    new_debate.save()
+    debateId = new_debate.pk
     context = {"debateId":debateId}
+    request.session[str(new_debate.pk)] = request.POST["starter_name"]
+    print (new_debate.pk)
     #TODO redirect to debate page
     #return render(request, 'created_dummy.html')
     return render(request, 'waiting.html', context)
@@ -86,7 +78,7 @@ def waiting(request, debateId):
 
 def get_username(request):
     return render(request, "username.txt")
-
+    
 def chat_refresh(request, chatroom_id):
     chatroom = get_object_or_404(Debate, pk=chatroom_id)
     messages = ChatMessage.objects.filter(debate=chatroom.id)
