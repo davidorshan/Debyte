@@ -3,17 +3,17 @@
 <!DOCTYPE html>
 <html>
 
-	<link rel="stylesheet" type="text/css" href="{% static 'debates/create_debate.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'debates/main.css' %}">
 
 	<h2> Create a Debate </h2>
 
-	<form action="/front/{{debateId}}/waiting" method="post">
+	<form action="create_debate" method="post">
 	{% csrf_token %}
 
-	<p> Topic: </p>
+	<p> Topic: ("President Trump")</p>
 	<input type="text" name="topic" id="topic"><br />
 
-	<p> Position: </p>
+	<p> Position: ("Trump is great!")</p>
 	<input type="text" name="position" id="position"><br />
 	<p> Your name: </p>
 	<input type="text" name="starter_name" id="starter_name"><br />
