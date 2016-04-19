@@ -2,6 +2,13 @@
 <link rel="stylesheet" type="text/css" href="{% static 'debates/chatroom.css' %}" />
 
 <script>
+
+window.onload = focustextbox;
+
+function focustextbox(){
+	document.getElementById("message_container").focus();
+}
+
 function updateMessages(){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(){
@@ -32,7 +39,13 @@ function sendMessage(){
     x.send({{chatroom.pk}});
 }
 
+function userExited(){
+
+}
+
+
 var myInterval = setInterval(updateMessages, 2000);
+
 
 </script>
 
@@ -45,10 +58,10 @@ var myInterval = setInterval(updateMessages, 2000);
 <br>
 <section>
 
-<form id='user_form' method='post' action='/front/{{chatroom.pk}}/add_message' onsubmit="">
+<form id='user_form' method='post' action='/front/{{chatroom.pk}}/add_message' onsubmit="focustextbox()">
 {%csrf_token%}
 	<label id="username">{{username}}: </label>
-	<input type="text" name="message" class="user_message"/>
+	<input type="text" name="message" class="user_message" id="message_container"/>
 	<input type="submit" value="Send"/>
 </form>
 </section>
