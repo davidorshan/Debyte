@@ -26,6 +26,13 @@
         
         sendRequests();
         
+        function playSound() {
+            if (!playedSound) {
+                var audio = new Audio("{% static 'debates/joinedsound.mp3' %}");
+                audio.play();
+                playedSound = true;
+            }
+        }
         function sendRequests() {
             
             var xhttp = new XMLHttpRequest();
@@ -37,11 +44,7 @@
                     else {
                         document.getElementById("join_link").innerHTML = "Join Debate";
                         document.title = "Ready!"
-                        if (!playedSound) {
-                            var audio = new Audio("{% static 'debates/joinedsound.mp3' %}");
-                            audio.play();
-                            playedSount = True;
-                        }
+                        playSound();
                     }
                 }
             };

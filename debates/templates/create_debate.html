@@ -21,7 +21,11 @@
 
 	<h3> Category </h3>
 	{% for category in categories %}
+        {% if forloop.counter == 1 %}
+		<input type="radio" name="category" id="category{{ forloop.counter }}" value="{{ category.id }}" checked="checked" />
+        {% else %}
 		<input type="radio" name="category" id="category{{ forloop.counter }}" value="{{ category.id }}" />
+        {% endif %}
 		<label for="category{{ forloop.counter }}">{{ category.name }}</label><br />
 	{% endfor %}
 
