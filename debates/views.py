@@ -8,8 +8,11 @@ from django.http import Http404
 def front_page(request, redirect_message=None):
 
     categories = Category.objects.all()
+    debates = Debate.objects.order_by('?')
+    to_display = debates[:10]
+    #categories = categories.first()
     #return HttpResponse(','.join([a.topic for a in categories[1].debate_set.all()]))
-    context = {"categories":categories, "redirect_message":redirect_message}
+    context = {"categories":categories, "to_display":to_display, "redirect_message":redirect_message}
     print (context)
     return render(request, "front.html", context)
 
