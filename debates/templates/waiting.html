@@ -1,35 +1,55 @@
 
 {% load staticfiles %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'debates/main.css' %}">
-<h1> Debate Created! </h1>
 
-<h3 id="wait_text"></h3>
 
-<a id="join_link" href="/front/{{debateId}}/"></a>
+<html>
+    <head>
+    <meta charset="UTF-8">
+    <title>Waiting</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'debates/main.css' %}">
+    </head>
+    <body>
 
-<script>
 
-	var interval = setInterval(sendRequests, 2000);
-	
-	sendRequests();
-	
-	function sendRequests() {
-		
-		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function() {
-			if (xhttp.readyState == 4 && xhttp.status == 200) {
-				if (xhttp.responseText == "0") {
-					document.getElementById("wait_text").innerHTML = "Waiting for another to join. A link will appear below when another user has joined.";
-				}
-				else {
-					document.getElementById("join_link").innerHTML = "Join Debate";
-				}
-			}
-		};
-		
-		xhttp.open("GET", "waiting_done", true);
-		xhttp.send();
-	}
-	
-</script>
+
+    <h1> Debate Created! </h1>
+
+    <h3 id="wait_text"></h3>
+
+    <a id="join_link" href="/front/{{debateId}}/"></a>
+
+    <script>
+
+        var interval = setInterval(sendRequests, 2000);
+        var playedSound = false;
+        
+        sendRequests();
+        
+        function sendRequests() {
+            
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                    if (xhttp.responseText == "0") {
+                        document.getElementById("wait_text").innerHTML = "Waiting for another to join. A link will appear below when another user has joined.";
+                    }
+                    else {
+                        document.getElementById("join_link").innerHTML = "Join Debate";
+                        document.title = "Ready!"
+                        if (!playedSound) {
+                            var audio = new Audio("{% static 'debates/joinedsound.mp3' %}");
+                            audio.play();
+                            playedSount = True;
+                        }
+                    }
+                }
+            };
+            
+            xhttp.open("GET", "waiting_done", true);
+            xhttp.send();
+        }
+        
+    </script>
+    </body>
+    </html>
